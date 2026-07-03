@@ -234,6 +234,41 @@ const breadcrumbItems = [
     </div>
   </section>
 
+  <!-- Cross-Linking: Autres services pour cette commune -->
+  <section style="padding: 50px 0; background-color: #FFFDF2; border-top: 1.5px solid var(--border-color);">
+    <div class="container" style="max-width: 900px;">
+      <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 10px;">
+        Nos autres services toiture à {commune.nom}
+      </h3>
+      <p style="text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 30px;">
+        Découvrez aussi nos prestations complémentaires pour votre toiture à {commune.nom} ({commune.codePostal}).
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <a href={`/renovation-toiture-${commune.slug}/`} style="display: block; background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; text-decoration: none; transition: var(--transition); box-shadow: var(--shadow-sm);">
+          <span style="font-size: 22px;">🔨</span>
+          <h4 style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--primary); margin: 8px 0 5px;">Rénovation de Toiture à {commune.nom}</h4>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Réfection complète, remplacement de couverture en tuiles romanes ou canal, charpente et zinguerie.</p>
+        </a>
+        <a href={`/entretien-toiture-${commune.slug}/`} style="display: block; background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; text-decoration: none; transition: var(--transition); box-shadow: var(--shadow-sm);">
+          <span style="font-size: 22px;">🧼</span>
+          <h4 style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--primary); margin: 8px 0 5px;">Démoussage &amp; Hydrofuge à {commune.nom}</h4>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Nettoyage haute pression, traitement anti-mousse et application hydrofuge pour prolonger la durée de vie de votre couverture.</p>
+        </a>
+        <a href="/tarifs/" style="display: block; background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; text-decoration: none; transition: var(--transition); box-shadow: var(--shadow-sm);">
+          <span style="font-size: 22px;">🧮</span>
+          <h4 style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--primary); margin: 8px 0 5px;">Grille de Tarifs Toiture 2026</h4>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Consultez nos tableaux de prix détaillés par type de couverture, surface et prestation dans le Gard.</p>
+        </a>
+      </div>
+      <div style="margin-top: 25px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+        <a href="/guides/couvreur-dans-le-gard-les-qualifications-essentielles-en-zone-cevenole/" style="font-size: 13px; color: var(--accent); font-weight: 600;">🏆 Qualifications couvreur</a>
+        <a href="/guides/sinistre-toiture-et-cat-nat-dans-le-gard-declaration-expertise-et-indemnisation/" style="font-size: 13px; color: var(--accent); font-weight: 600;">📋 Sinistre &amp; Cat-Nat</a>
+        <a href="/guides/prix-toiture-dans-le-gard-en-2026-nimes-ales-bagnols-budgets-complets/" style="font-size: 13px; color: var(--accent); font-weight: 600;">📊 Budget complet Gard 2026</a>
+        <a href="/guides/toiture-en-lauze-cevenole-restauration-prix-et-artisans-specialises/" style="font-size: 13px; color: var(--accent); font-weight: 600;">⛰️ Lauze Cévenole</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Nearby Link Section -->
   <section style="padding: 60px 0; background-color: var(--card-bg); border-top: 1.5px solid var(--border-color);">
     <div class="container">

@@ -1,0 +1,11 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Block utility & legal pages from crawling budget
+Disallow: /mentions-legales/
+Disallow: /politique-confidentialite/
+Disallow: /confirmation/
+
+# Sitemap
+Sitemap: https://toiture-gard.fr/sitemap-index.xml
