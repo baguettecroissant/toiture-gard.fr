@@ -46,14 +46,14 @@ const description = post.data.description;
         <!-- Main Content -->
         <div>
           <article style="display: flex; flex-direction: column; gap: 20px;">
-            <header style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
               <span style="font-family: var(--font-mono); font-size: 13.5px; color: var(--accent); font-weight: 700;">
                 📅 Publié le {new Date(post.data.publishDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} par {post.data.author || 'Le Maître Couvreur'}
               </span>
               <h1 style="margin: 0; font-size: 2.2rem; color: var(--primary); line-height: 1.25; font-family: var(--font-heading); font-weight: 800;">
                 {post.data.title}
               </h1>
-            </header>
+            </div>
 
             {post.data.image && (
               <div style="border-radius: var(--radius-md); overflow: hidden; max-height: 380px; width: 100%; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 20px;">

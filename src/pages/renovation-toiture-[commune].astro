@@ -21,7 +21,7 @@ const prices = getDynamicPrices(commune);
 const nearby = getSmartNearbyCommunes(commune.slug, communes, 5, 2);
 
 const title = local.title;
-const description = local.introParagraph;
+const description = commune.introText;
 
 const breadcrumbItems = [
   { label: "Accueil", href: "/" },
@@ -61,7 +61,7 @@ const breadcrumbItems = [
             Rénovation de Toiture à <span style="color: var(--secondary);">{commune.nom}</span> ({commune.codePostal})
           </h1>
           <p style="font-size: 16.5px; line-height: 1.6; color: var(--text); margin-bottom: 25px;">
-            {local.introParagraph}
+            {commune.introText}
           </p>
           
           <div style="background: white; border: 1.5px solid var(--border-color); border-left: 4px solid var(--primary); padding: 18px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); margin-bottom: 25px;">
@@ -148,6 +148,69 @@ const breadcrumbItems = [
               {local.realEstateInsight}
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche Technique Communale & Liens Officiels -->
+  <section style="padding: 70px 0; background-color: white; border-top: 1.5px solid var(--border-color); border-bottom: 1.5px solid var(--border-color); font-family: var(--font-body);">
+    <div class="container" style="max-width: 900px;">
+      <h2 style="font-family: var(--font-heading); font-size: 28px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 30px;">
+        📋 Fiche Technique de Couverture &amp; Données Locales — {commune.nom}
+      </h2>
+      
+      <div class="grid-2" style="gap: 30px; margin-bottom: 40px;">
+        <!-- Left: Données Géographiques & Administratives -->
+        <div style="background: var(--card-bg); border: 1.5px solid var(--border-color); padding: 25px; border-radius: var(--radius-md);">
+          <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 15px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 8px;">
+            📍 Informations Territoriales
+          </h3>
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14.0px;">
+            <li style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 5px;"><strong>Département :</strong> Gard (30)</li>
+            <li style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 5px;"><strong>Zone Géographique :</strong> {commune.microRegionLabel}</li>
+            <li style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 5px;"><strong>Intercommunalité :</strong> {commune.intercommunalite}</li>
+            <li style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 5px;"><strong>Altitude moyenne :</strong> {commune.altitude} mètres (exigence de tuiles certifiées antigel)</li>
+            <li style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 5px;"><strong>Population Municipale :</strong> {commune.population.toLocaleString('fr-FR')} habitants</li>
+            <li><strong>Monuments de référence :</strong> Proche de {commune.landmarks.join(' et de ')}</li>
+          </ul>
+        </div>
+        
+        <!-- Right: Conseils Professionnels & Réglementation -->
+        <div style="background: var(--card-bg); border: 1.5px solid var(--border-color); padding: 25px; border-radius: var(--radius-md);">
+          <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 15px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 8px;">
+            💡 Conseils de l'Artisan Local
+          </h3>
+          <p style="font-size: 13.5px; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px;">
+            {commune.conseilLocal}
+          </p>
+          <div style="background: #FFF7ED; border: 1px solid #FED7AA; padding: 12px; border-radius: var(--radius-sm); font-size: 12.5px; color: #9A3412;">
+            <strong>Recommandation :</strong> Pour un projet visible depuis {commune.landmarks[0]}, assurez-vous de consulter le PLU en mairie de <strong>{commune.nom}</strong> avant tout démarrage de chantier.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Liens Utiles Externes Certifiés -->
+      <div style="background: var(--primary-light); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 30px;">
+        <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 15px; text-align: center;">
+          🔗 Ressources Administratives &amp; Aides Officielles pour {commune.nom}
+        </h3>
+        <p style="font-size: 13.5px; text-align: center; color: var(--text-muted); margin-bottom: 20px;">
+          Consultez les sites gouvernementaux pour sécuriser vos démarches administratives et financières de rénovation thermique :
+        </p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+          <a href="https://www.service-public.fr/particuliers/vosdroits/F17578" target="_blank" rel="noopener nofollow" style="background: white; border: 1.5px solid var(--border-color); padding: 10px 18px; border-radius: 30px; font-size: 13px; font-weight: bold; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            📄 Déclaration Préalable de Travaux &rarr;
+          </a>
+          <a href="https://france-renov.gouv.fr/" target="_blank" rel="noopener nofollow" style="background: white; border: 1.5px solid var(--border-color); padding: 10px 18px; border-radius: 30px; font-size: 13px; font-weight: bold; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            ☀️ Aides Énergie France Rénov' &rarr;
+          </a>
+          <a href="https://www.anah.gouv.fr/" target="_blank" rel="noopener nofollow" style="background: white; border: 1.5px solid var(--border-color); padding: 10px 18px; border-radius: 30px; font-size: 13px; font-weight: bold; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            🏢 Subventions Anah &rarr;
+          </a>
+          <a href="http://www.gard.gouv.fr/" target="_blank" rel="noopener nofollow" style="background: white; border: 1.5px solid var(--border-color); padding: 10px 18px; border-radius: 30px; font-size: 13px; font-weight: bold; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            🏛️ Services de l'État dans le Gard &rarr;
+          </a>
         </div>
       </div>
     </div>
