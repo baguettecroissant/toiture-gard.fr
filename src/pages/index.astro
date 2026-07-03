@@ -1,0 +1,366 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SchemaMarkup from '../components/SchemaMarkup.astro';
+import StepsForm from '../components/StepsForm.astro';
+import communes from '../data/communes.json';
+
+const title = "Toiture & Couverture dans le Gard (30) | Professionnels Certifiés & Devis Gratuits 2026";
+const description = "Rénovation, nettoyage hydrofuge et réparation de toiture dans le Gard (30). Recevez gratuitement 3 devis de couvreurs certifiés RGE assurés en décennale.";
+
+// Select the top 12 cities for homepage list
+const popularCities = communes.slice(0, 12);
+---
+
+<Layout title={title} description={description}>
+  <SchemaMarkup
+    slot="head"
+    pageUrl={Astro.url.href}
+    pageTitle={title}
+    pageDescription={description}
+    faqItems={[
+      {
+        q: "Quel est le prix au m² pour refaire son toit dans le Gard ?",
+        a: "Le tarif moyen pour une réfection de toiture en tuiles romanes oscille entre 85€ et 140€ le m² TTC. Pour des tuiles canal traditionnelles scellées au mortier sur un mas ancien, comptez entre 105€ et 165€ le m² TTC, pose comprise."
+      },
+      {
+        q: "Comment protéger sa toiture face aux épisodes cévenols ?",
+        a: "Il est indispensable de faire poser un écran sous-toiture HPV (haute perméabilité à la vapeur) pour bloquer les infiltrations d'eau poussées par le vent, d'ancrer solidement les tuiles selon le DTU 40.21 (Zone III), et de nettoyer chaque fin d'été les débris de garrigue dans vos gouttières."
+      },
+      {
+        q: "Comment obtenir des subventions pour refaire ma toiture dans le 30 ?",
+        a: "Si vos travaux de toiture s'accompagnent d'une isolation thermique performante (sarking ou isolation des combles), vous pouvez obtenir les aides MaPrimeRénov' et CEE de l'ANAH. La seule condition est d'embaucher un couvreur certifié RGE."
+      }
+    ]}
+  />
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="two-column-layout">
+        <!-- Hero Left Info -->
+        <div>
+          <div class="alert-pill">
+            <div class="alert-pulse-icon"></div>
+            <span>Urgence épisode cévenol : intervention 48h</span>
+          </div>
+          <h1>
+            Votre Toiture Résistante aux Éléments dans le Gard (30)
+          </h1>
+          <p>
+            Épisodes cévenols dévastateurs, canicules estivales et vent violent du Mistral... Votre couverture gardoise subit des contraintes extrêmes. Comparez des couvreurs certifiés RGE du 30 assurés en décennale.
+          </p>
+          
+          <div style="display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+            <div style="background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.15); padding: 12px 20px; border-radius: var(--radius-sm);">
+              <span style="font-size: 20px; margin-right: 8px;">🛡️</span>
+              <strong style="color: white; font-size: 14.5px;">Garantie Décennale 10 ans</strong>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.15); padding: 12px 20px; border-radius: var(--radius-sm);">
+              <span style="font-size: 20px; margin-right: 8px;">🏆</span>
+              <strong style="color: white; font-size: 14.5px;">Artisans Qualifiés RGE</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Right Form -->
+        <div>
+          <StepsForm />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regional Context Section -->
+  <section style="padding: 75px 0; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <span class="badge-pill" style="margin-bottom: 15px;">⛈️ Résister au Climat Méditerranéen</span>
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Pourquoi la toiture gardoise exige un savoir-faire spécifique ?
+        </h2>
+        <p style="font-size: 16.5px; color: var(--text-muted); line-height: 1.6;">
+          Le département du Gard (30) combine les épisodes pluvieux les plus violents de France dans les Cévennes, des canicules extrêmes dépassant les 42°C en plaine, et des tempêtes de vent soufflant sur la Petite Camargue et le couloir rhodanien.
+        </p>
+      </div>
+
+      <div class="two-column-layout" style="align-items: stretch; gap: 40px;">
+        <!-- Left: Weather challenges cards -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="card" style="border-left: 4px solid var(--secondary); border-top: none; display: flex; gap: 15px; padding: 20px; align-items: start;">
+            <div style="font-size: 28px; line-height: 1;">⛈️</div>
+            <div>
+              <h3 style="font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Orages Cévenols Torrentiels</h3>
+              <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Des abats d'eau dépassant 300 mm en quelques heures saturent les toitures. Un écran sous-toiture HPV robuste et une zinguerie de large développement (33) sont requis pour empêcher l'eau de pénétrer sous vos plafonds.
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--secondary); border-top: none; display: flex; gap: 15px; padding: 20px; align-items: start;">
+            <div style="font-size: 28px; line-height: 1;">🔥</div>
+            <div>
+              <h3 style="font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Canicules &amp; Chaleur sous Combles</h3>
+              <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Le soleil dessèche et surchauffe les greniers à plus de 55°C. Une isolation certifiée RGE à forte inertie thermique (laine de bois) est primordiale pour maintenir la fraîcheur intérieure et réduire la facture de climatisation.
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--secondary); border-top: none; display: flex; gap: 15px; padding: 20px; align-items: start;">
+            <div style="font-size: 28px; line-height: 1;">🌬️</div>
+            <div>
+              <h3 style="font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Rafales du Mistral &amp; Vent Marin</h3>
+              <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Les vents violents s'engouffrent sous les toitures et déplacent les tuiles. La pose de vos couvertures dans le Gard doit respecter les obligations de clouage et de scellement renforcé du DTU 40.21 (Zone d'exposition III).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Illustrative image -->
+        <div style="border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
+          <img 
+            src="/images/hero-toiture-gard.png" 
+            alt="Artisan couvreur sur une toiture dans le Gard" 
+            style="width: 100%; height: 100%; object-fit: cover; min-height: 350px;" 
+            loading="lazy"
+          />
+          <div style="padding: 12px 18px; background: white; border-top: 1.5px solid var(--border-color); font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono);">
+            🏡 Toiture gardoise typique : alliance de tuiles canal robustes et de paysages de garrigue.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Materials Guide Section -->
+  <section style="padding: 75px 0; background-color: #FFFDF2; border-top: 1.5px solid var(--border-color); border-bottom: 1.5px solid var(--border-color);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Tuile Romane vs Tuile Canal : Guide des Matériaux
+        </h2>
+        <p style="font-size: 16px; color: var(--text-muted);">
+          Le standard moderne à emboîtement contre l'esthétique historique du Sud.
+        </p>
+      </div>
+
+      <div class="two-column-layout" style="gap: 40px; align-items: stretch;">
+        <!-- Romane -->
+        <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column;">
+          <img src="/images/guides/tuile-canal-romaine.png" alt="Tuiles Romanes de couleur ocre posées sur une charpente" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1.5px solid var(--border-color);" loading="lazy" />
+          <div style="padding: 30px; display: flex; flex-direction: column; height: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+              <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin: 0;">La Tuile Romane</h3>
+              <span class="badge-pill" style="background: var(--primary-light); color: var(--primary); margin: 0; font-size: 11px;">Le Standard Moderne</span>
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; flex-grow: 1;">
+              Idéale pour les villas résidentielles construites après 1980 et les maisons récentes. Elle dispose de canaux d'emboîtement étanches prévenant les infiltrations par vent fort et limitant le poids de toit.
+            </p>
+            <ul style="padding-left: 20px; font-size: 13px; color: var(--text); display: flex; flex-direction: column; gap: 8px; margin: 0;">
+              <li><strong>Fixation par emboîtement :</strong> Plus étanche sous la pluie battante.</li>
+              <li><strong>Légère :</strong> Sollicite moins les charpentes légères.</li>
+              <li><strong>Économique :</strong> Prix plus bas au m² et main d'œuvre réduite.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Canal -->
+        <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column;">
+          <img src="/images/guides/prix-toiture-gard.png" alt="Toitures traditionnelles de Nîmes avec tuiles canal anciennes" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1.5px solid var(--border-color);" loading="lazy" />
+          <div style="padding: 30px; display: flex; flex-direction: column; height: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+              <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin: 0;">La Tuile Canal</h3>
+              <span class="badge-pill" style="background: #FFF7ED; color: var(--secondary); border-color: var(--secondary); margin: 0; font-size: 11px;">L'Authenticité Patrimoniale</span>
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; flex-grow: 1;">
+              Indispensable pour la restauration de mas de caractère, bâtisses anciennes d'Uzès ou immeubles historiques du centre de Nîmes. Posée sur génoises ou cales de mortier de chaux.
+            </p>
+            <ul style="padding-left: 20px; font-size: 13px; color: var(--text); display: flex; flex-direction: column; gap: 8px; margin: 0;">
+              <li><strong>Esthétique inégalée :</strong> Redonne le cachet traditionnel du Gard historique.</li>
+              <li><strong>Forte inertie thermique :</strong> Épaisseur élevée protégeant contre la chaleur solaire.</li>
+              <li><strong>ABF Conforme :</strong> Prescrite en zone de protection du patrimoine (Uzès, monuments).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Budget Estimator Section (Vanilla JS) -->
+  <section style="padding: 75px 0; background-color: var(--card-bg);">
+    <div class="container" style="max-width: 800px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="badge-pill" style="margin-bottom: 15px;">🧮 Estimateur de Budget Virtuel</span>
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Estimer le Tarif Moyen de mes Travaux de Toiture
+        </h2>
+        <p style="font-size: 16px; color: var(--text-muted);">
+          Sélectionnez la surface de votre toit et le type de couverture pour simuler votre prix.
+        </p>
+      </div>
+
+      <div style="background: white; border: 2px solid var(--border-color); border-radius: var(--radius-md); padding: 35px; box-shadow: var(--shadow-mauve);">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- Field 1: Work Type -->
+          <div class="form-group">
+            <label style="font-family: var(--font-heading); font-weight: bold; font-size: 15.5px;">Type de Projet :</label>
+            <select id="estimator-type" class="form-control" style="background: white; font-weight: bold;">
+              <option value="romane">🔨 Rénovation complète Tuiles Romanes (avec écran HPV)</option>
+              <option value="canal">🔨 Rénovation complète Tuiles Canal traditionnelles</option>
+              <option value="demoussage">🧼 Nettoyage &amp; Traitement Hydrofuge imperméable</option>
+              <option value="zinc">⚡ Couverture en Zinc / Zinguerie sur-mesure</option>
+            </select>
+          </div>
+
+          <!-- Field 2: Surface Slider -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px;">
+              <label style="font-family: var(--font-heading); font-size: 15.5px; margin: 0;">Surface de la toiture :</label>
+              <span style="color: var(--primary); font-family: var(--font-mono);"><span id="estimator-surface-val">100</span> m²</span>
+            </div>
+            <input type="range" id="estimator-surface" min="40" max="300" step="10" value="100" style="width: 100%; accent-color: var(--primary); cursor: pointer;" />
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 5px;">
+              <span>40 m²</span>
+              <span>150 m²</span>
+              <span>300 m²</span>
+            </div>
+          </div>
+
+          <!-- Field 3: Heights option -->
+          <div class="form-group">
+            <label style="font-family: var(--font-heading); font-weight: bold; font-size: 15.5px;">Hauteur du bâtiment :</label>
+            <div style="display: flex; gap: 15px; margin-top: 5px;">
+              <label style="font-size: 14.5px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="radio" name="estimator-height" value="1" checked style="accent-color: var(--primary);" /> Plain-pied (RDC)
+              </label>
+              <label style="font-size: 14.5px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="radio" name="estimator-height" value="1.2" style="accent-color: var(--primary);" /> À étage (R+1 ou R+2)
+              </label>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <hr style="border: 0; border-top: 1.5px solid var(--border-color); margin: 10px 0;" />
+
+          <!-- Output Pricing Box -->
+          <div style="background: var(--primary-light); border: 2.5px dashed var(--border-color); padding: 25px; border-radius: var(--radius-sm); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <div style="font-size: 13.5px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Estimation budgétaire 2026 :</div>
+            <div style="font-size: 32px; font-weight: 800; color: var(--primary); font-family: var(--font-mono);" id="estimator-result">
+              8 500 € – 14 000 €
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin: 0; line-height: 1.4;">
+              Estimation moyenne indicative pour le Gard (TVA incluse, hors subventions et aides de l'ANAH).
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 25px;">
+          <a href="/devis/" class="contact-btn" style="padding: 14px 45px; font-size: 16px; text-align: center; width: 100%;">
+            📋 Demander 3 Devis Précis Gratuits
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Communes Grid -->
+  <section style="padding: 75px 0; background-color: #FFFDF2; border-top: 1.5px solid var(--border-color); border-bottom: 1.5px solid var(--border-color);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <span class="badge-pill" style="margin-bottom: 15px;">📍 Proximité Gardoise</span>
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Trouvez un Couvreur dans Votre Commune
+        </h2>
+        <p style="font-size: 16px; color: var(--text-muted);">
+          Nos artisans couvrent l'intégralité du département du Gard. Retrouvez les guides de tarifs par ville.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;">
+        {popularCities.map((c) => (
+          <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between;">
+            <h3 style="font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 15px;">
+              {c.nom} ({c.codePostal})
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+              <a href={`/renovation-toiture-${c.slug}/`} style="font-weight: bold; color: var(--accent);">
+                🔨 Toiture &amp; Rénovation &rarr;
+              </a>
+              <a href={`/entretien-toiture-${c.slug}/`} style="font-weight: bold; color: var(--accent);">
+                🧼 Nettoyage &amp; Hydrofuge &rarr;
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="/communes/" class="btn-secondary" style="display: inline-block;">
+          🏛️ Voir toutes les communes du Gard
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive script for Budget Estimator -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const typeSelect = document.getElementById('estimator-type') as HTMLSelectElement;
+      const surfaceInput = document.getElementById('estimator-surface') as HTMLInputElement;
+      const surfaceValSpan = document.getElementById('estimator-surface-val');
+      const resultDiv = document.getElementById('estimator-result');
+      
+      const calculate = () => {
+        if (!typeSelect || !surfaceInput || !resultDiv || !surfaceValSpan) return;
+        
+        const type = typeSelect.value;
+        const surface = Number(surfaceInput.value);
+        surfaceValSpan.textContent = surface.toString();
+        
+        const heightInputs = document.getElementsByName('estimator-height');
+        let heightMultiplier = 1;
+        for (let i = 0; i < heightInputs.length; i++) {
+          const radio = heightInputs[i] as HTMLInputElement;
+          if (radio.checked) {
+            heightMultiplier = Number(radio.value);
+            break;
+          }
+        }
+        
+        let minPrice = 0;
+        let maxPrice = 0;
+        
+        if (type === 'romane') {
+          minPrice = surface * 90 * heightMultiplier;
+          maxPrice = surface * 140 * heightMultiplier;
+        } else if (type === 'canal') {
+          minPrice = surface * 110 * heightMultiplier;
+          maxPrice = surface * 165 * heightMultiplier;
+        } else if (type === 'demoussage') {
+          minPrice = surface * 12 * heightMultiplier;
+          maxPrice = surface * 28 * heightMultiplier;
+        } else if (type === 'zinc') {
+          minPrice = surface * 120 * heightMultiplier;
+          maxPrice = surface * 180 * heightMultiplier;
+        }
+        
+        // Round to nearest 50
+        const finalMin = Math.round(minPrice / 50) * 50;
+        const finalMax = Math.round(maxPrice / 50) * 50;
+        
+        resultDiv.textContent = `${finalMin.toLocaleString('fr-FR')} € – ${finalMax.toLocaleString('fr-FR')} €`;
+      };
+      
+      if (typeSelect && surfaceInput) {
+        typeSelect.addEventListener('change', calculate);
+        surfaceInput.addEventListener('input', calculate);
+        document.getElementsByName('estimator-height').forEach(radio => {
+          radio.addEventListener('change', calculate);
+        });
+        
+        calculate();
+      }
+    });
+  </script>
+</Layout>

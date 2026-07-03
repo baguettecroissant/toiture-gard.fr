@@ -1,0 +1,199 @@
+---
+// ExitIntentPopup.astro
+---
+
+<div class="exit-intent-backdrop" id="exit-intent-backdrop" aria-hidden="true" role="dialog">
+  <div class="exit-intent-modal" style="background: white; max-width: 520px; width: 90%; border-radius: var(--radius-md); overflow: hidden; position: relative; box-shadow: var(--shadow-mauve); border: 2.5px solid var(--border-color); transform: scale(0.9); transition: transform 0.3s ease;">
+    <!-- Top colored decorative bar -->
+    <div class="modal-stripe" style="height: 6px; background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);"></div>
+    
+    <!-- Close Button -->
+    <button class="close-modal-btn" id="close-modal-btn" aria-label="Fermer la fenêtre" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; color: var(--text-muted); cursor: pointer; line-height: 1; z-index: 10;">&times;</button>
+    
+    <!-- Content -->
+    <div class="modal-body" style="padding: 40px 30px 30px; text-align: center;">
+      <div class="modal-icon" style="font-size: 48px; margin-bottom: 15px; display: inline-block;">🧰</div>
+      <h3 style="font-size: 22px; margin-bottom: 12px; color: var(--primary); font-family: var(--font-heading); font-weight: 700;">Attendez ! Votre toiture est-elle prête pour les prochains épisodes cévenols ?</h3>
+      <p class="modal-desc" style="font-size: 14.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 25px; font-family: var(--font-body);">
+        Dans le Gard (30), les pluies torrentielles cévenoles (jusqu'à 500 mm en 12h) et les fortes rafales de vent testent chaque année l'étanchéité des tuiles romanes et canal. Comparez les artisans couvreurs qualifiés RGE proches de chez vous.
+      </p>
+      
+      <!-- Bullet Points -->
+      <ul class="modal-bullets" style="list-style: none; padding: 0; text-align: left; display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; font-family: var(--font-body);">
+        <li style="display: flex; gap: 10px; font-size: 13.5px; color: var(--text);">
+          <span class="bullet-check" style="color: var(--secondary); font-weight: bold;">✓</span>
+          <span><strong>Prise en charge assurance :</strong> Devis détaillé pour l'expert en cas de sinistre ou d'infiltration d'eau.</span>
+        </li>
+        <li style="display: flex; gap: 10px; font-size: 13.5px; color: var(--text);">
+          <span class="bullet-check" style="color: var(--secondary); font-weight: bold;">✓</span>
+          <span><strong>Aides Énergie 30 &amp; ANAH :</strong> MaPrimeRénov' et CEE cumulables pour financer l'isolation de votre toit.</span>
+        </li>
+        <li style="display: flex; gap: 10px; font-size: 13.5px; color: var(--text);">
+          <span class="bullet-check" style="color: var(--secondary); font-weight: bold;">✓</span>
+          <span><strong>Devis Gratuits &amp; Décennale :</strong> Comparez 3 offres de couvreurs qualifiés sans engagement.</span>
+        </li>
+      </ul>
+      
+      <!-- CTA Buttons -->
+      <div class="modal-actions" style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="btn-primary pulse-btn" id="exit-popup-cta" style="padding: 14px 20px; font-weight: bold; border: none; cursor: pointer; color: white; border-radius: 50px;">
+          📋 Recevoir mes devis gratuits &rarr;
+        </button>
+        <button class="opt-out-btn" id="exit-popup-opt-out" style="background: none; border: none; font-size: 11px; color: var(--text-muted); cursor: pointer; text-decoration: underline; line-height: 1.4; font-family: var(--font-body);">
+          Non merci, je préfère prendre le risque de fuite d'eau lors de la prochaine tempête cévenole
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .exit-intent-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(28, 25, 23, 0.5); /* matches stone-900 like */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .exit-intent-backdrop.show {
+    display: flex;
+    opacity: 1;
+  }
+  .exit-intent-backdrop.show .exit-intent-modal {
+    transform: scale(1) !important;
+  }
+  .close-modal-btn:hover {
+    color: var(--primary) !important;
+  }
+  .opt-out-btn:hover {
+    color: var(--text) !important;
+  }
+
+  /* Pulsing button effect */
+  .pulse-btn {
+    animation: pulseGlow 2.5s infinite;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(30, 58, 138, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(30, 58, 138, 0);
+    }
+  }
+
+  /* Global pulse highlight for lead forms on CTA click */
+  :global(.pulse-form) {
+    animation: formPulseGlow 1s ease-in-out infinite alternate !important;
+    transition: all 0.3s ease !important;
+  }
+
+  @keyframes formPulseGlow {
+    from {
+      box-shadow: var(--shadow-lg), 0 0 0 0px rgba(154, 52, 18, 0.4) !important;
+      border-color: var(--border-color) !important;
+    }
+    to {
+      box-shadow: var(--shadow-lg), 0 0 0 10px rgba(154, 52, 18, 0.25) !important;
+      border-color: var(--primary) !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const backdrop = document.getElementById('exit-intent-backdrop');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const ctaBtn = document.getElementById('exit-popup-cta');
+    const optOutBtn = document.getElementById('exit-popup-opt-out');
+
+    if (!backdrop) return;
+
+    // localStorage key
+    const isShownKey = 'toiture_exit_popup_shown_30';
+    if (localStorage.getItem(isShownKey) === 'true') return;
+
+    let alreadyShown = false;
+
+    const showModal = () => {
+      if (alreadyShown) return;
+      alreadyShown = true;
+      localStorage.setItem(isShownKey, 'true');
+      backdrop.style.display = 'flex';
+      void backdrop.offsetWidth;
+      backdrop.classList.add('show');
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('scroll', handleScroll);
+      clearTimeout(mobileTimer);
+    };
+
+    const closeModal = () => {
+      backdrop.classList.remove('show');
+      setTimeout(() => {
+        backdrop.style.display = 'none';
+      }, 300);
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY < 20) {
+        showModal();
+      }
+    };
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    // Fallback for mobile/touch screens (since mouseleave doesn't exist)
+    const handleScroll = () => {
+      const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+      if (scrollPercent > 0.5) {
+        showModal();
+      }
+    };
+    document.addEventListener('scroll', handleScroll);
+
+    const mobileTimer = setTimeout(() => {
+      showModal();
+    }, 20000);
+
+    // Close handlers
+    closeBtn?.addEventListener('click', closeModal);
+    optOutBtn?.addEventListener('click', closeModal);
+
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && backdrop.classList.contains('show')) closeModal();
+    });
+
+    // CTA: scroll to form
+    ctaBtn?.addEventListener('click', () => {
+      closeModal();
+      const targetForm = document.getElementById('devis') || document.getElementById('borne-lead-form');
+      if (targetForm) {
+        targetForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetForm.classList.add('pulse-form');
+        setTimeout(() => targetForm.classList.remove('pulse-form'), 3000);
+        const firstBox = targetForm.querySelector('.option-box') as HTMLElement;
+        if (firstBox) {
+          firstBox.focus();
+          firstBox.style.outline = '3px solid var(--secondary)';
+          setTimeout(() => { if (firstBox) firstBox.style.outline = ''; }, 3000);
+        }
+      } else {
+        window.location.href = '/devis/';
+      }
+    });
+  });
+</script>

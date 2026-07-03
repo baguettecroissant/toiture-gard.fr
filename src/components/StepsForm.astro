@@ -1,0 +1,466 @@
+---
+import config from '../data/config.json';
+
+interface Props {
+  initialZip?: string;
+  initialCommune?: string;
+}
+
+const { initialZip = "", initialCommune = "" } = Astro.props;
+---
+
+<div class="form-card" id="devis">
+  <h2>Estimez votre budget toiture &amp; recevez vos devis</h2>
+  <p class="subtitle">Artisans couvreurs du Gard - Tarifs et aides 2026</p>
+
+  <form id="borne-lead-form">
+    <!-- Step 1: Type de travaux -->
+    <div class="step-container" id="step-1">
+      <div class="form-group">
+        <label>1. Quel est votre projet de toiture ?</label>
+        <div class="options-grid">
+          <div class="option-box active" data-value="143" data-step="1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3m10-11v11a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span>Réfection complète</span>
+            <span class="desc-text">Dépose totale, pose de tuiles neuves, charpente, écran HPV, isolation</span>
+          </div>
+          <div class="option-box" data-value="81" data-step="1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <span>Démoussage &amp; nettoyage</span>
+            <span class="desc-text">Nettoyage haute pression, traitement algicide, hydrofuge tuiles romanes/canal</span>
+          </div>
+          <div class="option-box" data-value="80" data-step="1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span>Réparation / Fuites</span>
+            <span class="desc-text">Remplacement de tuiles cassées après grêle, réparation de fuite d'urgence</span>
+          </div>
+          <div class="option-box" data-value="8" data-step="1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Charpente / Ossature</span>
+            <span class="desc-text">Traitement du bois de charpente, réparation de pannes et solives</span>
+          </div>
+        </div>
+        <input type="hidden" name="cat_id" id="cat_id" value="143" />
+      </div>
+      <div class="form-nav">
+        <button type="button" class="btn-primary next-btn" data-next="2" style="width: 100%;">Continuer &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Habitation & Statut -->
+    <div class="step-container" id="step-2" style="display: none;">
+      <div class="form-group">
+        <label>2. Quel est le type de bâtiment ?</label>
+        <div class="options-grid-row">
+          <div class="option-box-small active" data-value="1" data-field="type_bien" data-step="2">
+            <span>🏡 Maison Individuelle</span>
+          </div>
+          <div class="option-box-small" data-value="2" data-field="type_bien" data-step="2">
+            <span>🏢 Immeuble / Collectif</span>
+          </div>
+        </div>
+        <input type="hidden" name="type_bien" id="type_bien" value="1" />
+      </div>
+
+      <div class="form-group" style="margin-top: 25px;">
+        <label>Quel est votre statut d'occupation ?</label>
+        <div class="options-grid-row">
+          <div class="option-box-small active" data-value="1" data-field="situation" data-step="2b">
+            <span>Propriétaire</span>
+          </div>
+          <div class="option-box-small" data-value="2" data-field="situation" data-step="2b">
+            <span>Locataire</span>
+          </div>
+        </div>
+        <input type="hidden" name="situation" id="situation" value="1" />
+      </div>
+
+      <div class="form-nav">
+        <button type="button" class="btn-secondary prev-btn" data-prev="1">&larr; Retour</button>
+        <button type="button" class="btn-primary next-btn" data-next="3">Continuer &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Type de couverture & Surface -->
+    <div class="step-container" id="step-3" style="display: none;">
+      <div class="form-group">
+        <label>3. Quel est le type de couverture actuel ?</label>
+        <div class="options-grid">
+          <div class="option-box active" data-value="Tuiles romanes" data-step="3">
+            <span>⚡ Tuile romane en terre cuite</span>
+            <span class="desc-text">Le standard moderne le plus répandu en plaine gardoise</span>
+          </div>
+          <div class="option-box" data-value="Tuiles canal" data-step="3">
+            <span>⚡ Tuile canal traditionnelle</span>
+            <span class="desc-text">Idéal pour les mas anciens et maisons de village pittoresques</span>
+          </div>
+          <div class="option-box" data-value="Zinc" data-step="3">
+            <span>⚡ Zinguerie / Joint debout</span>
+            <span class="desc-text">Robuste et étanche pour les toitures exposées aux orages</span>
+          </div>
+          <div class="option-box" data-value="Membrane EPDM" data-step="3">
+            <span>⚡ Toit plat / Membrane EPDM</span>
+            <span class="desc-text">Pour les extensions contemporaines et villas RE2020</span>
+          </div>
+        </div>
+        <input type="hidden" name="chauffage_actuel" id="chauffage_actuel" value="Tuiles romanes" />
+      </div>
+
+      <div class="form-group" style="margin-top: 25px;">
+        <label>Quelle est la surface approximative du toit (en m²) ?</label>
+        <div class="options-grid-row">
+          <div class="option-box-small active" data-value="moins80" data-field="parking_position" data-step="3b">
+            <span>Moins de 80 m²</span>
+          </div>
+          <div class="option-box-small" data-value="80a150" data-field="parking_position" data-step="3b">
+            <span>80 à 150 m²</span>
+          </div>
+          <div class="option-box-small" data-value="plus150" data-field="parking_position" data-step="3b">
+            <span>Plus de 150 m²</span>
+          </div>
+        </div>
+        <input type="hidden" name="parking_position" id="parking_position" value="80a150" />
+      </div>
+
+      <div class="form-nav">
+        <button type="button" class="btn-secondary prev-btn" data-prev="2">&larr; Retour</button>
+        <button type="button" class="btn-primary next-btn" data-next="4">Continuer &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Localisation & Délai -->
+    <div class="step-container" id="step-4" style="display: none;">
+      <div class="form-group">
+        <label for="postal_code">4. Code postal du chantier (Gard uniquement)</label>
+        <input type="text" id="postal_code" name="postal_code" placeholder="Ex: 30000" class="form-control" required pattern="^30[0-9]{3}$" maxlength="5" value={initialZip} />
+        <span class="input-tip">Doit commencer par 30 (ex : 30000 Nîmes, 30100 Alès, 30200 Bagnols-sur-Cèze, 30300 Beaucaire, 30800 Saint-Gilles, 30600 Vauvert)</span>
+      </div>
+
+      <!-- Auto resolved city display -->
+      <div class="form-group" id="ville-group" style="display: none;">
+        <label for="ville_chantier">Ville du projet</label>
+        <input type="text" id="ville_chantier" name="ville_chantier" class="form-control" placeholder="Sélectionnez votre ville" required value={initialCommune} />
+      </div>
+
+      <div class="form-group" style="margin-top: 25px;">
+        <label>Délai souhaité pour vos travaux</label>
+        <div class="options-grid-row">
+          <div class="option-box-small active" data-value="1" data-field="delais" data-step="4b">
+            <span>⚡ Immédiat / Urgence</span>
+          </div>
+          <div class="option-box-small" data-value="2" data-field="delais" data-step="4b">
+            <span>📅 - de 3 mois</span>
+          </div>
+          <div class="option-box-small" data-value="4" data-field="delais" data-step="4b">
+            <span>⏳ + de 3 mois</span>
+          </div>
+        </div>
+        <input type="hidden" name="delais" id="delais" value="1" />
+      </div>
+
+      <div class="form-nav">
+        <button type="button" class="btn-secondary prev-btn" data-prev="3">&larr; Retour</button>
+        <button type="button" class="btn-primary next-btn" data-next="5">Continuer &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Coordonnées de contact -->
+    <div class="step-container" id="step-5" style="display: none;">
+      <div class="form-group-row">
+        <div class="form-group">
+          <label for="prenom">Votre Prénom</label>
+          <input type="text" id="prenom" name="prenom" placeholder="Marc" class="form-control" required minlength="2" />
+        </div>
+        <div class="form-group">
+          <label for="nom">Votre Nom</label>
+          <input type="text" id="nom" name="nom" placeholder="Vidal" class="form-control" required minlength="2" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Téléphone (validation requise)</label>
+        <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78" class="form-control" required pattern="^(06|07)[0-9]{8}$" maxlength="10" />
+        <span class="input-tip">Un technicien conseil valide avec vous votre devis par téléphone.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Adresse email</label>
+        <input type="email" id="email" name="email" placeholder="marc.vidal@gmail.com" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="adresse">Adresse complète du chantier</label>
+        <input type="text" id="adresse" name="adresse" placeholder="15 Avenue de Nîmes" class="form-control" required minlength="5" />
+      </div>
+
+      <!-- Errors alert wrapper -->
+      <div id="form-errors" class="alert-danger" style="display: none; margin-top: 15px;"></div>
+
+      <div class="form-nav">
+        <button type="button" class="btn-secondary prev-btn" data-prev="4">&larr; Retour</button>
+        <button type="submit" class="btn-primary submit-btn" style="color: white; border: none; width: auto; flex: 1;">🔥 Envoyer ma demande &rarr;</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="form-submitting" style="display: none; text-align: center; padding: 40px 0;">
+    <div class="spinner-loader"></div>
+    <h3 style="font-size: 20px; font-weight: 600; color: var(--primary); margin-top: 20px;">Vérification technique...</h3>
+    <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">Recherche de couvreurs RGE disponibles dans votre secteur gardois.</p>
+  </div>
+</div>
+
+<style>
+  .options-grid-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+  .option-box-small {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    background: #fff;
+    color: var(--primary);
+    transition: var(--transition);
+  }
+  .option-box-small:hover {
+    border-color: var(--accent);
+    background: var(--primary-light);
+  }
+  .option-box-small.active {
+    border-color: var(--secondary);
+    background: #FFF7ED; /* Soft orange-50 light */
+    color: var(--primary);
+    box-shadow: 0 0 0 1px var(--secondary);
+  }
+  .desc-text {
+    font-size: 11.5px;
+    font-weight: normal;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: block;
+  }
+  .input-tip {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: block;
+  }
+  .form-group-row {
+    display: flex;
+    gap: 15px;
+  }
+  .form-group-row .form-group {
+    flex: 1;
+  }
+  .alert-danger {
+    background: #fef2f2;
+    border: 1.5px solid #fca5a5;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  import communes from '../data/communes.json';
+
+  const nextBtns = document.querySelectorAll('.next-btn');
+  const prevBtns = document.querySelectorAll('.prev-btn');
+  const form = document.getElementById('borne-lead-form');
+  const formSubmitting = document.getElementById('form-submitting');
+  const formErrors = document.getElementById('form-errors');
+  const pcInput = document.getElementById('postal_code') as HTMLInputElement;
+  const villeGroup = document.getElementById('ville-group');
+  const villeInput = document.getElementById('ville_chantier') as HTMLInputElement;
+
+  // Handle Box Option Clicks (Step 1 & Step 3)
+  document.querySelectorAll('.option-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const step = box.getAttribute('data-step');
+      const value = box.getAttribute('data-value');
+      
+      document.querySelectorAll(`.option-box[data-step="${step}"]`).forEach(b => {
+        b.classList.remove('active');
+      });
+      
+      box.classList.add('active');
+      
+      if (step === '1') {
+        const input = document.getElementById('cat_id') as HTMLInputElement;
+        if (input) input.value = value || '';
+      } else if (step === '3') {
+        const input = document.getElementById('chauffage_actuel') as HTMLInputElement;
+        if (input) input.value = value || '';
+      }
+    });
+  });
+
+  // Handle Small Box Row clicks (Step 2, 2b, 3b, 4b)
+  document.querySelectorAll('.option-box-small').forEach(box => {
+    box.addEventListener('click', () => {
+      const step = box.getAttribute('data-step');
+      const value = box.getAttribute('data-value');
+      const field = box.getAttribute('data-field');
+      
+      document.querySelectorAll(`.option-box-small[data-step="${step}"]`).forEach(b => {
+        b.classList.remove('active');
+      });
+      box.classList.add('active');
+      
+      const hiddenInput = document.getElementById(field || '') as HTMLInputElement;
+      if (hiddenInput) {
+        hiddenInput.value = value || '';
+      }
+    });
+  });
+
+  // Auto-resolve city name from codePostal (30 prefix)
+  const resolveCity = () => {
+    if (!pcInput) return;
+    const cpVal = pcInput.value.trim();
+    if (/^30\d{3}$/.test(cpVal)) {
+      const found = communes.find(c => c.codePostal === cpVal);
+      if (found) {
+        villeInput.value = found.nom;
+        if (villeGroup) villeGroup.style.display = 'block';
+        villeInput.readOnly = true;
+      } else {
+        if (villeGroup) villeGroup.style.display = 'block';
+        villeInput.value = '';
+        villeInput.readOnly = false;
+      }
+    } else {
+      if (villeGroup) villeGroup.style.display = 'none';
+      villeInput.value = '';
+    }
+  };
+
+  if (pcInput) {
+    pcInput.addEventListener('input', resolveCity);
+    if (pcInput.value) {
+      resolveCity();
+    }
+  }
+
+  // Next Step Navigation
+  nextBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nextStepId = btn.getAttribute('data-next');
+      const currentStep = btn.closest('.step-container') as HTMLElement;
+      
+      if (nextStepId === '5') {
+        const cpVal = pcInput.value.trim();
+        if (!/^30\d{3}$/.test(cpVal)) {
+          alert('Veuillez entrer un code postal du Gard valide (commençant par 30).');
+          return;
+        }
+        if (!villeInput.value.trim()) {
+          alert('Veuillez spécifier la ville.');
+          return;
+        }
+      }
+
+      if (currentStep) currentStep.style.display = 'none';
+      const targetStep = document.getElementById(`step-${nextStepId}`);
+      if (targetStep) targetStep.style.display = 'block';
+    });
+  });
+
+  // Previous Step Navigation
+  prevBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prevStepId = btn.getAttribute('data-prev');
+      const currentStep = btn.closest('.step-container') as HTMLElement;
+      
+      if (currentStep) currentStep.style.display = 'none';
+      const targetStep = document.getElementById(`step-${prevStepId}`);
+      if (targetStep) targetStep.style.display = 'block';
+    });
+  });
+
+  // Form Submission
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    if (formErrors) {
+      formErrors.style.display = 'none';
+      formErrors.innerHTML = '';
+    }
+
+    const formData = new FormData(form as HTMLFormElement);
+    const catIdVal = Number(document.getElementById('cat_id')?.getAttribute('value') || (document.getElementById('cat_id') as HTMLInputElement)?.value || 143);
+    
+    const typeBienLabel = (document.getElementById('type_bien') as HTMLInputElement)?.value === '1' ? 'Maison' : 'Appartement';
+    const statusLabel = (document.getElementById('situation') as HTMLInputElement)?.value === '1' ? 'Propriétaire' : 'Locataire';
+    const materialLabel = (document.getElementById('chauffage_actuel') as HTMLInputElement)?.value || 'Tuiles romanes';
+    const openingsLabel = (document.getElementById('parking_position') as HTMLInputElement)?.value || '80a150';
+    
+    const qtyText = openingsLabel === 'moins80' ? 'Moins de 80 m²' : openingsLabel === '80a150' ? '80 à 150 m²' : 'Plus de 150 m²';
+
+    const payload = {
+      nom: (formData.get('nom') as string || '').trim(),
+      prenom: (formData.get('prenom') as string || '').trim(),
+      email: (formData.get('email') as string || '').trim(),
+      tel: (formData.get('phone') as string || '').trim(),
+      adresse: (formData.get('adresse') as string || '').trim(),
+      cp: (formData.get('postal_code') as string || '').trim(),
+      ville: (formData.get('ville_chantier') as string || '').trim(),
+      catId: catIdVal,
+      typeBien: (document.getElementById('type_bien') as HTMLInputElement)?.value || '1',
+      situation: (document.getElementById('situation') as HTMLInputElement)?.value || '1',
+      chauffageActuel: `Toiture: ${materialLabel}, Surface: ${qtyText}, Statut: ${statusLabel}`,
+      delais: (document.getElementById('delais') as HTMLInputElement)?.value || '2',
+      pageUrl: window.location.href
+    };
+
+    const step5 = document.getElementById('step-5') as HTMLElement;
+    if (step5) step5.style.display = 'none';
+    if (formSubmitting) formSubmitting.style.display = 'block';
+
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.errors?.join('<br/>') || 'Une erreur est survenue lors de la soumission de votre projet.');
+      }
+
+      window.location.href = `/confirmation?devis_id=${data.devis_id}&devis_hash=${data.devis_hash}&prenom=${encodeURIComponent(payload.prenom)}&ville=${encodeURIComponent(payload.ville)}&cat=${payload.catId}`;
+
+    } catch (err: any) {
+      console.error(err);
+      
+      if (formSubmitting) formSubmitting.style.display = 'none';
+      if (step5) step5.style.display = 'block';
+      
+      if (formErrors) {
+        formErrors.style.display = 'block';
+        formErrors.innerHTML = err.message || 'Une erreur est survenue lors de l\'envoi du devis. Veuillez réessayer.';
+      }
+    }
+  });
+</script>

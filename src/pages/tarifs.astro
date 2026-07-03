@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StepsForm from '../components/StepsForm.astro';
+
+const title = "Tarifs Toiture dans le Gard (30) en 2026 | Prix au m² Couvreur";
+const description = "Retrouvez la grille de prix détaillée pour vos travaux de toiture dans le Gard (30). Prix de réfection tuile romane/canal, démoussage, zinguerie, isolation.";
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Tarifs Toiture 2026" }
+];
+---
+
+<Layout title={title} description={description}>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <section style="padding: 50px 0 80px; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <span class="badge-pill" style="margin-bottom: 15px;">📊 Guide Tarifaire Officiel 2026</span>
+        <h1 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Quel est le Prix au m² d'un Couvreur dans le Gard ?
+        </h1>
+        <p style="font-size: 16.5px; color: var(--text-muted); line-height: 1.6;">
+          Les tarifs de toiture dépendent fortement du type de tuiles (canal scellées, romanes à emboîtement), de la hauteur du bâtiment et de l'accessibilité. Voici le récapitulatif des coûts moyens pratiqués sur le 30.
+        </p>
+      </div>
+
+      <div class="two-column-layout" style="align-items: start;">
+        <!-- Left: Table & Details -->
+        <div>
+          <div style="border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 25px;">
+            <img src="/images/guides/prix-toiture-gard.png" alt="Vue aérienne des toits de Nîmes en tuiles ocre" style="width: 100%; height: 240px; object-fit: cover;" />
+          </div>
+
+          <div style="overflow-x: auto; background: white; border: 2px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: 35px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px;">
+              <thead>
+                <tr style="background: var(--primary); color: white;">
+                  <th style="padding: 16px 20px; font-family: var(--font-heading); font-weight: 700;">Type de Travaux</th>
+                  <th style="padding: 16px 20px; font-family: var(--font-heading); font-weight: 700;">Prix Moyen 2026</th>
+                  <th style="padding: 16px 20px; font-family: var(--font-heading); font-weight: 700;">Unité</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Réfection tuiles romanes</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">85 – 140 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">au m²</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background: var(--primary-light);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Réfection tuiles canal traditionnelles</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">105 – 165 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">au m²</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Nettoyage hydrofuge complet</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">12 – 28 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">au m²</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background: var(--primary-light);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Réparation de fuite d'urgence</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">500 – 4 000 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">par sinistre</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Gouttières Aluminium / Zinc (pluies torrentielles)</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">45 – 85 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">par mètre linéaire</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background: var(--primary-light);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Maçonnerie de faîtage (sec / chaux)</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">35 – 70 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">par mètre linéaire</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Isolation sous rampants / Sarking (R>=6)</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">70 – 150 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">au m²</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background: var(--primary-light);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Rénovation et traitement charpente</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">55 – 100 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">au m²</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Toiture Lauze Cévenole (pierre naturelle)</td>
+                  <td style="padding: 16px 20px;"><span class="price-tag">180 – 300 €</span></td>
+                  <td style="padding: 16px 20px; color: var(--text-muted);">au m²</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 25px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 12px;">📈 Taxes Réduites &amp; Aides Financières</h3>
+            <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px;">
+              Les chantiers de rénovation de toiture et d'isolation dans le Gard bénéficient de conditions de financement favorables :
+            </p>
+            <ul style="padding-left: 20px; font-size: 14px; color: var(--text); display: flex; flex-direction: column; gap: 8px;">
+              <li><strong>TVA à 5,5% :</strong> Applicable aux travaux d'isolation thermique (sarking, laine soufflée) si l'artisan est certifié RGE.</li>
+              <li><strong>TVA à 10% :</strong> Applicable aux travaux de rénovation simple (changement de tuiles romanes/canal, zinguerie, démoussage) pour les logements de plus de 2 ans.</li>
+              <li><strong>MaPrimeRénov' &amp; CEE :</strong> Aides de l'ANAH et primes éco énergie pour réduire le reste à charge sur vos travaux d'isolation (jusqu'à 30% d'économies d'énergie).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <StepsForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

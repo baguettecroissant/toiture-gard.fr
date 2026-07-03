@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import config from '../data/config.json';
+
+const title = `Politique de Confidentialité — ${config.brandName}`;
+const description = `Politique de confidentialité et protection des données personnelles (RGPD) du site ${config.domain}.`;
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Politique de Confidentialité" }
+];
+---
+
+<Layout title={title} description={description} robots="noindex, nofollow">
+  <Breadcrumb items={breadcrumbItems} />
+
+  <section style="padding: 40px 0 80px; background-color: var(--card-bg);">
+    <div class="container" style="max-width: 800px; font-family: var(--font-body); line-height: 1.7; color: var(--text-muted);">
+      <h1 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 25px; text-align: center;">
+        Politique de Confidentialité (RGPD)
+      </h1>
+      
+      <p>
+        La présente Politique de Confidentialité décrit comment vos données personnelles sont collectées, utilisées et partagées lorsque vous utilisez le site <strong>{config.domain}</strong> pour effectuer des demandes d'estimation et de devis.
+      </p>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">1. Données collectées</h2>
+      <p>
+        Lorsque vous soumettez une demande sur notre site via le formulaire multi-étape, nous collectons les informations suivantes nécessaires au traitement de votre demande de devis :
+      </p>
+      <ul style="padding-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+        <li>Prénom, Nom</li>
+        <li>Adresse email, numéro de téléphone portable</li>
+        <li>Adresse du chantier, Code postal, Ville</li>
+        <li>Description technique de votre projet (type de tuiles, surface du toit, statut d'occupation)</li>
+        <li>Adresse IP, agent utilisateur du navigateur</li>
+      </ul>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">2. Utilisation et transmission des données</h2>
+      <p>
+        Vos données sont utilisées exclusivement pour :
+      </p>
+      <ul style="padding-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+        <li><strong>Enregistrement sécurisé :</strong> Sauvegarder votre demande dans notre base de données sécurisée (Supabase) pour des raisons de traçabilité.</li>
+        <li><strong>Transmission aux partenaires :</strong> Transmettre les informations techniques et de contact à la plateforme partenaire <strong>ViteUnDevis</strong> afin qu'un couvreur local qualifié RGE du Gard puisse prendre en charge votre demande et réaliser votre chiffrage.</li>
+        <li><strong>Validation téléphonique :</strong> Permettre à un technicien conseil de vous recontacter par téléphone portable afin de valider et qualifier les contraintes techniques de votre chantier.</li>
+      </ul>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">3. Durée de conservation</h2>
+      <p>
+        Vos données personnelles sont conservées pendant une durée maximale de 3 ans à compter de la soumission de votre formulaire, après quoi elles sont anonymisées ou supprimées de nos bases de données.
+      </p>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">4. Vos droits (RGPD)</h2>
+      <p>
+        Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, de portabilité et de suppression de vos données personnelles. Vous pouvez également vous opposer au traitement de vos données à tout moment. Pour exercer ces droits, vous pouvez nous écrire par courriel à : <strong>contact@{config.domain}</strong>.
+      </p>
+    </div>
+  </section>
+</Layout>

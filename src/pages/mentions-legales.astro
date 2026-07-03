@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import config from '../data/config.json';
+
+const title = `Mentions Légales — ${config.brandName}`;
+const description = `Mentions légales de l'éditeur du site web ${config.domain} et conditions générales d'utilisation.`;
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Mentions Légales" }
+];
+---
+
+<Layout title={title} description={description} robots="noindex, nofollow">
+  <Breadcrumb items={breadcrumbItems} />
+
+  <section style="padding: 40px 0 80px; background-color: var(--card-bg);">
+    <div class="container" style="max-width: 800px; font-family: var(--font-body); line-height: 1.7; color: var(--text-muted);">
+      <h1 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 25px; text-align: center;">
+        Mentions Légales
+      </h1>
+      
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">1. Présentation du site internet</h2>
+      <p>
+        En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site internet <strong>{config.domain}</strong> l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi :
+      </p>
+      <p style="margin-top: 10px;">
+        <strong>Propriétaire / Éditeur :</strong> Le site {config.domain} est un actif digital exploité de manière indépendante par le réseau de génération de leads <strong>Rank &amp; Rent Baguette Croissant</strong>.<br/>
+        <strong>Responsable publication :</strong> Directeur de la publication - contact@{config.domain}<br/>
+        <strong>Hébergeur :</strong> Cloudflare Inc. - 101 Townsend St, San Francisco, CA 94107, États-Unis - Téléphone : +1 (415) 396-7380.
+      </p>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">2. Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus présents sur ce site (images, textes, code, logo) sont la propriété de l'éditeur ou font l'objet de droits d'usage spécifiques. Toute reproduction, représentation, modification ou publication d'un élément du site, quel que soit le moyen ou le procédé utilisé, est interdite sauf autorisation écrite préalable.
+      </p>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">3. Limitation de responsabilité</h2>
+      <p>
+        Le site {config.domain} a pour but de fournir des informations techniques et de mettre en relation des particuliers avec des professionnels spécialisés dans les travaux de toiture. L'éditeur ne saurait être tenu responsable de la qualité des travaux réalisés par les entreprises partenaires de mise en relation, ni des éventuels différends contractuels qui pourraient en résulter. Les estimations et tarifs fournis sur le site le sont à titre indicatif et n'engagent pas contractuellement les professionnels.
+      </p>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 30px; margin-bottom: 12px;">4. Liens hypertextes</h2>
+      <p>
+        Ce site contient des liens hypertextes vers d'autres sites. L'éditeur n'exerce aucun contrôle sur le contenu de ces sites externes et décline toute responsabilité quant à leur accès ou leur politique de confidentialité.
+      </p>
+    </div>
+  </section>
+</Layout>

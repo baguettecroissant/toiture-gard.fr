@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StepsForm from '../components/StepsForm.astro';
+
+const title = "Guide Pluies & Épisodes Cévenols : Protéger sa Toiture dans le Gard (30)";
+const description = "Comment protéger votre maison des pluies torrentielles et tempêtes cévenoles dans le Gard. Les points de contrôle sur votre toiture (tuiles, gouttières).";
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Guide Épisodes Cévenols" }
+];
+---
+
+<Layout title={title} description={description}>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <section style="padding: 50px 0 80px; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <span class="badge-pill" style="margin-bottom: 15px; background: rgba(239, 68, 68, 0.1); color: #EF4444; border-color: #FCA5A5;">⚠️ Alerte Climat Gard</span>
+        <h1 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Épisodes Cévenols : Votre Toiture est-elle Prête ?
+        </h1>
+        <p style="font-size: 16.5px; color: var(--text-muted); line-height: 1.6;">
+          Chaque automne, le Gard (30) fait face à des orages cévenols particulièrement violents. En moins de 24h, il peut tomber l'équivalent de 3 mois de précipitations, causant des infiltrations d'eau dévastatrices sur les toitures mal préparées.
+        </p>
+      </div>
+
+      <div class="two-column-layout" style="align-items: start;">
+        <!-- Left: Technical Article -->
+        <div style="font-size: 15px; color: var(--text); line-height: 1.7; display: flex; flex-direction: column; gap: 25px;">
+          <div style="border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 5px;">
+            <img src="/images/guides/episode-cevenol.png" alt="Orage cévenol torrentiel sur les toits d'un village du Gard" style="width: 100%; height: 240px; object-fit: cover;" />
+          </div>
+
+          <div style="background: var(--primary-light); border: 2px solid var(--border-color); padding: 25px; border-radius: var(--radius-sm);">
+            <h3 style="font-family: var(--font-heading); font-weight: 700; color: var(--primary); margin-bottom: 10px; font-size: 18px;">💡 Qu'est-ce qu'un Épisode Cévenol ?</h3>
+            <p style="margin: 0; color: var(--text-muted);">
+              Ce phénomène météorologique survient lorsque l'air chaud et très humide s'élevant de la mer Méditerranée remonte vers le nord et se heurte au relief montagneux des Cévennes. Cela engendre des nuages stationnaires et des pluies d'une intensité extrême, parfois accompagnées de violentes rafales de vent.
+            </p>
+          </div>
+
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 10px;">Les 3 Points Vulnérables d'une Toiture face aux Pluies Cévenoles</h3>
+            
+            <h4 style="font-family: var(--font-heading); font-size: 16.5px; font-weight: 750; color: var(--primary); margin-top: 15px; margin-bottom: 8px;">1. Les tuiles déplacées ou poreuses</h4>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">
+              Le vent pousse la pluie à l'horizontale. Si vos tuiles romanes ou canal sont poreuses, mal fixées ou fendues, l'eau s'infiltre directement sous le toit. L'absence d'un écran sous-toiture HPV (Haute Perméabilité à la Vapeur) est la première cause de sinistre lors de ces tempêtes.
+            </p>
+            
+            <h4 style="font-family: var(--font-heading); font-size: 16.5px; font-weight: 750; color: var(--primary); margin-bottom: 8px;">2. L'engorgement des gouttières</h4>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">
+              Les feuilles de chênes verts ou d'aiguilles de pin accumulées dans les chenaux obstruent les naissances et descentes de gouttières. Lorsque l'orage cévenol éclate, l'eau s'accumule, déborde vers l'intérieur sous la volige de rive et pénètre dans vos plafonds.
+            </p>
+
+            <h4 style="font-family: var(--font-heading); font-size: 16.5px; font-weight: 750; color: var(--primary); margin-bottom: 8px;">3. La rupture du mortier de faîtage</h4>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">
+              Les anciens faîtages en mortier ont tendance à se craqueler sous l'effet du soleil et de la chaleur du Gard. Lors d'orages violents, l'eau s'infiltre dans ces fissures. La solution moderne est la pose d'un faîtage à sec avec closoir ventilé souple en aluminium.
+            </p>
+          </div>
+
+          <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 30px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 15px; text-align: center;">🛠️ Actions de Prévention Recommandées :</h3>
+            <ul style="padding-left: 20px; display: flex; flex-direction: column; gap: 10px; color: var(--text-muted);">
+              <li><strong>Nettoyage annuel des chenaux :</strong> À réaliser impérativement en fin d'été avant l'automne.</li>
+              <li><strong>Fixation renforcée :</strong> Clouer ou crocheter les tuiles de rives et de courants conformément au DTU 40.21.</li>
+              <li><strong>Traitement Hydrofuge :</strong> Bloque la capillarité de la terre cuite pour empêcher l'eau d'être absorbée par les tuiles.</li>
+              <li><strong>Contrôle des solins :</strong> Vérification de l'étanchéité des raccordements de cheminée et Velux.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <StepsForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

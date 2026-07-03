@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StepsForm from '../components/StepsForm.astro';
+
+const title = "Guide Toiture en Lauze Cévenole : Tradition & Restauration dans le Gard (30)";
+const description = "Découvrez le charme et la technique des toits en lauze traditionnelle des Cévennes gardoises. Conseils d'entretien, de pose et prix moyens au m².";
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Toiture Lauze Cévenole" }
+];
+---
+
+<Layout title={title} description={description}>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <section style="padding: 50px 0 80px; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <span class="badge-pill" style="margin-bottom: 15px;">⛰️ Patrimoine Historique Gardois</span>
+        <h1 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Toiture en Lauze Cévenole : Un Art Séculaire
+        </h1>
+        <p style="font-size: 16.5px; color: var(--text-muted); line-height: 1.6;">
+          Dans les hautes vallées cévenoles du Gard, la lauze de schiste ou de calcaire habille les toitures des mas traditionnels depuis des siècles. Un matériau d'une durabilité légendaire qui réclame un savoir-faire hautement spécialisé.
+        </p>
+      </div>
+
+      <div class="two-column-layout" style="align-items: start;">
+        <!-- Left: Technical Article -->
+        <div style="font-size: 15px; color: var(--text); line-height: 1.7; display: flex; flex-direction: column; gap: 25px;">
+          <div style="border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 5px;">
+            <img src="/images/guides/lauze-cevenole.png" alt="Toiture en lauze sur un mas traditionnel cévenol" style="width: 100%; height: 240px; object-fit: cover;" />
+          </div>
+
+          <div style="background: var(--primary-light); border: 2px solid var(--border-color); padding: 25px; border-radius: var(--radius-sm);">
+            <h3 style="font-family: var(--font-heading); font-weight: 700; color: var(--primary); margin-bottom: 10px; font-size: 18px;">💡 Qu'est-ce que la Lauze Cévenole ?</h3>
+            <p style="margin: 0; color: var(--text-muted);">
+              La lauze est une pierre plate de schiste ou de calcaire extraite localement. Posées par recouvrement successif, ces dalles de pierre forment une toiture solide, résistante à la neige, aux vents violents des crêtes et aux chocs thermiques. C'est l'identité architecturale emblématique des Cévennes gardoises.
+            </p>
+          </div>
+
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 10px;">Les Spécificités d'une Rénovation en Lauze</h3>
+            
+            <h4 style="font-family: var(--font-heading); font-size: 16.5px; font-weight: 750; color: var(--primary); margin-top: 15px; margin-bottom: 8px;">1. Une structure de charpente renforcée</h4>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">
+              Une toiture en lauze pèse entre 200 et 350 kg par m² (contre seulement 45 kg pour des tuiles en terre cuite). Une telle charge réclame une charpente traditionnelle massive, souvent construite en bois de châtaignier d'époque, capable de résister à la fois au poids de la pierre et de la neige.
+            </p>
+            
+            <h4 style="font-family: var(--font-heading); font-size: 16.5px; font-weight: 750; color: var(--primary); margin-bottom: 8px;">2. La technique de pose par chevauchement</h4>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">
+              Les lauzes sont classées par taille : les plus grandes et lourdes sont disposées en bas (égout), tandis que les plus légères remontent vers le faîtage. La pose s'effectue sans clous pour les pierres les plus massives, maintenues par leur propre gravité et scellées avec précision.
+            </p>
+
+            <h4 style="font-family: var(--font-heading); font-size: 16.5px; font-weight: 750; color: var(--primary); margin-bottom: 8px;">3. Un coût de restauration important</h4>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">
+              La lauze est un matériau noble. Sa rareté, le manque d'artisans lauziers qualifiés et le temps de main-d'œuvre conséquent expliquent des tarifs compris entre 180€ et 300€ le m² TTC. C'est le prix pour offrir à votre mas une toiture capable de traverser un siècle.
+            </p>
+          </div>
+
+          <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 30px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 15px; text-align: center;">⚙️ Conseils d'Entretien de vos Lauzes :</h3>
+            <ul style="padding-left: 20px; display: flex; flex-direction: column; gap: 10px; color: var(--text-muted);">
+              <li><strong>Contrôle visuel annuel :</strong> Vérifier qu'aucune pierre n'a glissé ou ne s'est fendue après un hiver rigoureux.</li>
+              <li><strong>Nettoyage des mousses :</strong> Éliminer doucement les mousses sans utiliser de nettoyeur haute pression qui risquerait de délaminer le schiste.</li>
+              <li><strong>Excellente zinguerie :</strong> S'assurer du bon fonctionnement des gouttières pour éviter toute infiltration sous la rive en pierre.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <StepsForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

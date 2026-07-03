@@ -1,0 +1,253 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SchemaMarkup from '../components/SchemaMarkup.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StepsForm from '../components/StepsForm.astro';
+import communes from '../data/communes.json';
+import { generateCommuneContent, getDynamicPrices } from '../lib/contentEngine';
+import { getSmartNearbyCommunes } from '../lib/geoLinks';
+
+export async function getStaticPaths() {
+  return communes.map((c) => ({
+    params: { commune: c.slug },
+    props: { commune: c },
+  }));
+}
+
+const { commune } = Astro.props;
+const pageType = 'demoussage';
+const local = generateCommuneContent(commune, pageType);
+const prices = getDynamicPrices(commune);
+const nearby = getSmartNearbyCommunes(commune.slug, communes, 5, 2);
+
+const title = local.title;
+const description = local.introParagraph;
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Villes Gard (30)", href: "/communes/" },
+  { label: `Démoussage & Nettoyage de Toiture à ${commune.nom}` }
+];
+---
+
+<Layout title={title} description={description}>
+  <SchemaMarkup
+    slot="head"
+    pageUrl={Astro.url.href}
+    pageTitle={title}
+    pageDescription={description}
+    faqItems={local.faqItems}
+    breadcrumbItems={[
+      { label: "Accueil", href: "/" },
+      { label: "Villes Gard", href: "/communes/" },
+      { label: `Démoussage toiture à ${commune.nom}` }
+    ]}
+    communeName={commune.nom}
+    communeData={commune}
+  />
+
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Localized Hero Section -->
+  <section style="background: linear-gradient(135deg, rgba(154,52,18,0.06) 0%, rgba(30,58,138,0.03) 100%); padding: 50px 0; border-bottom: 2px solid var(--border-color); font-family: var(--font-body);">
+    <div class="container">
+      <div class="two-column-layout">
+        <!-- Hero Text -->
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="badge-pill" style="width: max-content; margin-bottom: 20px;">
+            🧼 Nettoyage &amp; Hydrofuge — Entretien {commune.nom}
+          </div>
+          <h1 style="font-family: var(--font-heading); font-size: 38px; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 20px;">
+            Démoussage &amp; Nettoyage de Toiture à <span style="color: var(--secondary);">{commune.nom}</span> ({commune.codePostal})
+          </h1>
+          <p style="font-size: 16.5px; line-height: 1.6; color: var(--text); margin-bottom: 25px;">
+            {local.introParagraph}
+          </p>
+          
+          <div style="background: white; border: 1.5px solid var(--border-color); border-left: 4px solid var(--primary); padding: 18px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); margin-bottom: 25px;">
+            <div style="font-weight: 750; color: var(--primary); margin-bottom: 5px; font-size: 14.5px;">💡 Note Technique Gard :</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+              La chaleur extrême estivale dilate la terre cuite de vos tuiles canal ou romanes et les rend poreuses. L'humidité stagnante de l'automne y fait proliférer mousses et lichens noirs, favorisant les micro-fissures lors du gel en hiver. Un hydrofuge perlant est fortement recommandé pour stopper ce processus.
+            </p>
+          </div>
+        </div>
+
+        <!-- Hero Form -->
+        <div>
+          <StepsForm initialZip={commune.codePostal} initialCommune={commune.nom} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Analysis Section -->
+  <section style="padding: 70px 0; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Pourquoi traiter le toit de votre habitation à {commune.nom} ?
+        </h2>
+        <p style="font-size: 16px; color: var(--text-muted);">
+          Les risques biologiques liés aux micro-organismes et au climat méditerranéen.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size: 28px; margin-bottom: 12px;">🌊</div>
+          <h3 style="font-family: var(--font-heading); font-size: 18.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Attaque Saline &amp; Embruns</h3>
+          <p style="font-size: 14.0px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            {local.climateContext}
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="font-size: 28px; margin-bottom: 12px;">🛡️</div>
+          <h3 style="font-family: var(--font-heading); font-size: 18.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Prolongation Garantie Tuile</h3>
+          <p style="font-size: 14.0px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            {local.realEstateInsight}
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="font-size: 28px; margin-bottom: 12px;">☀️</div>
+          <h3 style="font-family: var(--font-heading); font-size: 18.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Chaleur &amp; Porosité Tuile</h3>
+          <p style="font-size: 14.0px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            {local.energyProfileText}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process details -->
+  <section style="padding: 70px 0; background-color: #FFFDF0; border-top: 1.5px solid var(--border-color); border-bottom: 1.5px solid var(--border-color);">
+    <div class="container" style="max-width: 900px;">
+      <h2 style="font-family: var(--font-heading); font-size: 30px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 40px;">
+        Le procédé de traitement hydrofuge en 4 étapes
+      </h2>
+      
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; display: flex; gap: 15px; align-items: center;">
+          <div style="background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+          <div>
+            <h4 style="font-family: var(--font-heading); color: var(--primary); font-size: 16.5px; margin-bottom: 4px;">Diagnostic &amp; Brossage</h4>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0;">Inspection de la toiture et décollage mécanique manuel des plus grosses plaques de mousse, lichen noir et sédiments.</p>
+          </div>
+        </div>
+        
+        <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; display: flex; gap: 15px; align-items: center;">
+          <div style="background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+          <div>
+            <h4 style="font-family: var(--font-heading); color: var(--primary); font-size: 16.5px; margin-bottom: 4px;">Nettoyage basse pression calibré</h4>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0;">Rinçage régulé à basse pression pour débarrasser les tuiles romanes ou canal de toute saleté sans altérer leur couche superficielle protectrice.</p>
+          </div>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; display: flex; gap: 15px; align-items: center;">
+          <div style="background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+          <div>
+            <h4 style="font-family: var(--font-heading); color: var(--primary); font-size: 16.5px; margin-bottom: 4px;">Application du traitement algicide / fongicide</h4>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0;">Pulvérisation d'un produit professionnel pour éliminer les spores et racines microscopiques profondément logées dans la terre cuite.</p>
+          </div>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; display: flex; gap: 15px; align-items: center;">
+          <div style="background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</div>
+          <div>
+            <h4 style="font-family: var(--font-heading); color: var(--primary); font-size: 16.5px; margin-bottom: 4px;">Imperméabilisation hydrofuge perlant</h4>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0;">Application d'un hydrofuge incolore ou coloré de haute qualité. L'eau glisse ainsi sur les tuiles (effet perlant), emportant les poussières et préservant la toiture au sec pendant au moins 10 ans.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prices Section -->
+  <section style="padding: 70px 0; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Tarifs Démoussage &amp; Nettoyage à {commune.nom} (30)
+        </h2>
+      </div>
+
+      <div style="max-width: 750px; margin: 0 auto; overflow-x: auto; background: white; border: 2px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px;">
+          <thead>
+            <tr style="background: var(--primary); color: white;">
+              <th style="padding: 16px 20px; font-family: var(--font-heading); font-weight: 700;">Prestation</th>
+              <th style="padding: 16px 20px; font-family: var(--font-heading); font-weight: 700;">Prix Moyen m² (Gard)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Nettoyage Haute Pression simple</td>
+              <td style="padding: 16px 20px;"><span class="price-tag">{Math.round(prices.demoussageHydro.min * 0.7)} – {Math.round(prices.demoussageHydro.max * 0.7)} €/m²</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color); background: var(--primary-light);">
+              <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Nettoyage + Algicide préventif</td>
+              <td style="padding: 16px 20px;"><span class="price-tag">{Math.round(prices.demoussageHydro.min * 0.9)} – {Math.round(prices.demoussageHydro.max * 0.9)} €/m²</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Nettoyage + Traitement Hydrofuge perlant (Incolore)</td>
+              <td style="padding: 16px 20px;"><span class="price-tag">{prices.demoussageHydro.min} – {prices.demoussageHydro.max} €/m²</span></td>
+            </tr>
+            <tr style="background: var(--primary-light);">
+              <td style="padding: 16px 20px; font-weight: bold; color: var(--primary);">Nettoyage + Hydrofuge coloré (Restauration aspect)</td>
+              <td style="padding: 16px 20px;"><span class="price-tag">{Math.round(prices.demoussageHydro.min * 1.3)} – {Math.round(prices.demoussageHydro.max * 1.3)} €/m²</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div style="text-align: center; margin-top: 35px;">
+        <a href="#devis" class="btn-primary" style="display: inline-block;">📋 Demander un devis nettoyage gratuit &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section style="padding: 70px 0; background-color: var(--bg); border-top: 1.5px solid var(--border-color);">
+    <div class="container" style="max-width: 850px;">
+      <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 40px;">
+        FAQ Nettoyage Toiture à {commune.nom}
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        {local.faqItems.map((item) => (
+          <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 25px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-family: var(--font-heading); font-size: 17.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--secondary);">Q.</span> {item.q}
+            </h3>
+            <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 25px;">
+              {item.a}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Nearby Link Section -->
+  <section style="padding: 60px 0; background-color: var(--card-bg); border-top: 1.5px solid var(--border-color);">
+    <div class="container">
+      <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 30px;">
+        🔍 Nettoyage et démoussage de toitures aux alentours de {commune.nom} (30)
+      </h3>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 800px; margin: 0 auto;">
+        {nearby.map((n) => (
+          <a href={`/entretien-toiture-${n.slug}/`} style="background: white; border: 1.5px solid var(--border-color); padding: 8px 16px; border-radius: 30px; font-size: 13.5px; font-weight: 700; color: var(--primary); text-decoration: none; transition: var(--transition);">
+            🧼 Nettoyage {n.nom} ({n.codePostal})
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  th, td {
+    border-bottom: 1px solid var(--border-color);
+  }
+</style>

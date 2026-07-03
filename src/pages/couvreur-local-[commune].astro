@@ -1,0 +1,195 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SchemaMarkup from '../components/SchemaMarkup.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import StepsForm from '../components/StepsForm.astro';
+import communes from '../data/communes.json';
+import { generateCommuneContent, getDynamicPrices } from '../lib/contentEngine';
+import { getSmartNearbyCommunes } from '../lib/geoLinks';
+
+export async function getStaticPaths() {
+  return communes.map((c) => ({
+    params: { commune: c.slug },
+    props: { commune: c },
+  }));
+}
+
+const { commune } = Astro.props;
+const pageType = 'artisan';
+const local = generateCommuneContent(commune, pageType);
+const prices = getDynamicPrices(commune);
+const nearby = getSmartNearbyCommunes(commune.slug, communes, 5, 2);
+
+const title = local.title;
+const description = local.introParagraph;
+
+const breadcrumbItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Villes Gard (30)", href: "/communes/" },
+  { label: `Trouver un Couvreur RGE à ${commune.nom}` }
+];
+---
+
+<Layout title={title} description={description}>
+  <SchemaMarkup
+    slot="head"
+    pageUrl={Astro.url.href}
+    pageTitle={title}
+    pageDescription={description}
+    faqItems={local.faqItems}
+    breadcrumbItems={[
+      { label: "Accueil", href: "/" },
+      { label: "Villes Gard", href: "/communes/" },
+      { label: `Trouver un couvreur à ${commune.nom}` }
+    ]}
+    communeName={commune.nom}
+    communeData={commune}
+  />
+
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Localized Hero Section -->
+  <section style="background: linear-gradient(135deg, rgba(154,52,18,0.06) 0%, rgba(30,58,138,0.03) 100%); padding: 50px 0; border-bottom: 2px solid var(--border-color); font-family: var(--font-body);">
+    <div class="container">
+      <div class="two-column-layout">
+        <!-- Hero Text -->
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="badge-pill" style="width: max-content; margin-bottom: 20px;">
+            💼 Couvreurs RGE Qualifiés — Mise en relation {commune.nom}
+          </div>
+          <h1 style="font-family: var(--font-heading); font-size: 38px; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 20px;">
+            Trouver un Couvreur Certifié à <span style="color: var(--secondary);">{commune.nom}</span> ({commune.codePostal})
+          </h1>
+          <p style="font-size: 16.5px; line-height: 1.6; color: var(--text); margin-bottom: 25px;">
+            {local.introParagraph}
+          </p>
+          
+          <div style="background: white; border: 1.5px solid var(--border-color); border-left: 4px solid var(--primary); padding: 18px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); margin-bottom: 25px;">
+            <div style="font-weight: 750; color: var(--primary); margin-bottom: 5px; font-size: 14.5px;">💡 Information Importante RGE :</div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+              La qualification RGE (Reconnu Garant de l'Environnement) est obligatoire pour bénéficier de MaPrimeRénov' et de la TVA réduite lors de vos travaux d'isolation sous toiture.
+            </p>
+          </div>
+        </div>
+
+        <!-- Hero Form -->
+        <div>
+          <StepsForm initialZip={commune.codePostal} initialCommune={commune.nom} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Analysis Section -->
+  <section style="padding: 70px 0; background-color: var(--card-bg);">
+    <div class="container">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">
+          Qualifications RGE &amp; Assurances à Vérifier à {commune.nom}
+        </h2>
+        <p style="font-size: 16px; color: var(--text-muted);">
+          Garantissez la qualité et l'indemnisation de vos travaux de couverture.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size: 28px; margin-bottom: 12px;">🛡️</div>
+          <h3 style="font-family: var(--font-heading); font-size: 18.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Assurance Garantie Décennale</h3>
+          <p style="font-size: 14.0px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            {local.climateContext}
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="font-size: 28px; margin-bottom: 12px;">🏆</div>
+          <h3 style="font-family: var(--font-heading); font-size: 18.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Certification RGE &amp; Qualibat</h3>
+          <p style="font-size: 14.0px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            {local.abfRegulations}
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="font-size: 28px; margin-bottom: 12px;">🏠</div>
+          <h3 style="font-family: var(--font-heading); font-size: 18.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px;">Connaissance Bâtiment 30</h3>
+          <p style="font-size: 14.0px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            {local.housingTypologyInsight}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Market Data Checklist Section -->
+  <section style="padding: 70px 0; background-color: #FFFDF0; border-top: 1.5px solid var(--border-color); border-bottom: 1.5px solid var(--border-color);">
+    <div class="container" style="max-width: 900px;">
+      <h2 style="font-family: var(--font-heading); font-size: 30px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 40px;">
+        Indicateurs clés du marché à {commune.nom}
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+        <div style="background: white; border: 1.5px solid var(--border-color); padding: 25px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+          <div style="font-size: 32px; margin-bottom: 10px;">🏢</div>
+          <div style="font-size: 36px; font-weight: 800; color: var(--primary); font-family: var(--font-heading);">{commune.marketData?.couvreursRGE || 3}</div>
+          <p style="font-size: 14px; color: var(--text-muted); font-weight: bold; margin-top: 5px;">Couvreurs RGE référencés</p>
+        </div>
+        
+        <div style="background: white; border: 1.5px solid var(--border-color); padding: 25px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+          <div style="font-size: 32px; margin-bottom: 10px;">🧮</div>
+          <div style="font-size: 36px; font-weight: 800; color: var(--primary); font-family: var(--font-heading);">{prices.refectionRomane.min} €</div>
+          <p style="font-size: 14px; color: var(--text-muted); font-weight: bold; margin-top: 5px;">Prix moyen de départ / m²</p>
+        </div>
+
+        <div style="background: white; border: 1.5px solid var(--border-color); padding: 25px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+          <div style="font-size: 32px; margin-bottom: 10px;">⏳</div>
+          <div style="font-size: 36px; font-weight: 800; color: var(--primary); font-family: var(--font-heading);">{commune.marketData?.delaiMoyenJours || 10} j</div>
+          <p style="font-size: 14px; color: var(--text-muted); font-weight: bold; margin-top: 5px;">Délai d'intervention moyen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section style="padding: 70px 0; background-color: var(--bg); border-top: 1.5px solid var(--border-color);">
+    <div class="container" style="max-width: 850px;">
+      <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 40px;">
+        Questions pratiques sur les couvreurs à {commune.nom}
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        {local.faqItems.map((item) => (
+          <div style="background: white; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 25px; box-shadow: var(--shadow-sm);">
+            <h3 style="font-family: var(--font-heading); font-size: 17.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+              <span style="color: var(--secondary);">Q.</span> {item.q}
+            </h3>
+            <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 25px;">
+              {item.a}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Nearby Link Section -->
+  <section style="padding: 60px 0; background-color: var(--card-bg); border-top: 1.5px solid var(--border-color);">
+    <div class="container">
+      <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 30px;">
+        🔍 Trouver un couvreur certifié dans les communes voisines de {commune.nom} (30)
+      </h3>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 800px; margin: 0 auto;">
+        {nearby.map((n) => (
+          <a href={`/couvreur-local-${n.slug}/`} style="background: white; border: 1.5px solid var(--border-color); padding: 8px 16px; border-radius: 30px; font-size: 13.5px; font-weight: 700; color: var(--primary); text-decoration: none; transition: var(--transition);">
+            👤 Couvreur RGE {n.nom} ({n.codePostal})
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  th, td {
+    border-bottom: 1px solid var(--border-color);
+  }
+</style>
