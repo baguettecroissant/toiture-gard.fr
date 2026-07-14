@@ -7,7 +7,7 @@
  */
 
 // ── Site-specific config (change per R&R site) ──
-const SITE_DOMAIN = 'toiture-gard.fr';
+const SITE_DOMAIN = 'toiture30.fr';
 const SITE_NICHE = 'toiture';
 const DEPT_CODE = '30';
 const CP_PATTERN = /^30\d{3}$/;
