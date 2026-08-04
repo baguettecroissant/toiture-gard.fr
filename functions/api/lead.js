@@ -29,19 +29,28 @@ const CAT_NAMES = {
   8: 'Charpente',
 };
 
-// ── CORS headers ──
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type': 'application/json',
-};
+const CONSENT_TEXT = 'J’accepte d’être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires afin de qualifier ma demande de devis.';
+
+function corsHeaders(request) {
+  const origin = request.headers.get('Origin') || '';
+  const allowed = origin === `https://${SITE_DOMAIN}`
+    || origin === `https://www.${SITE_DOMAIN}`
+    || origin.startsWith('http://127.0.0.1:')
+    || origin.startsWith('http://localhost:');
+  return {
+    'Access-Control-Allow-Origin': allowed ? origin : `https://${SITE_DOMAIN}`,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json',
+    'Vary': 'Origin',
+  };
+}
 
 /**
  * Handle OPTIONS (CORS preflight)
  */
-export async function onRequestOptions() {
-  return new Response(null, { headers: CORS_HEADERS });
+export async function onRequestOptions(context) {
+  return new Response(null, { headers: corsHeaders(context.request) });
 }
 
 /**
@@ -53,8 +62,13 @@ export async function onRequestPost(context) {
     const {
       nom, prenom, email, tel, adresse, cp, ville,
       catId, typeBien, situation, chauffageActuel, delais,
-      pageUrl,
+      pageUrl, consent, consent_timestamp,
     } = rawBody;
+
+    const clientIp = context.request.headers.get('CF-Connecting-IP') || '';
+    const userAgent = context.request.headers.get('User-Agent') || '';
+    const consentTimestamp = String(consent_timestamp || '').trim();
+    const consentUrl = String(pageUrl || context.request.headers.get('Referer') || '').trim().slice(0, 500);
 
     // ── Server-side validation ──
     const errors = [];
@@ -66,10 +80,14 @@ export async function onRequestPost(context) {
     if (!cp || !CP_PATTERN.test(cp)) errors.push(`Code postal invalide (doit commencer par ${DEPT_CODE})`);
     if (!ville || ville.trim().length < 2) errors.push('Ville requise');
     if (!catId) errors.push('Projet requis');
+    if (consent !== true && consent !== 'true') errors.push('Consentement téléphonique requis');
+    if (!consentTimestamp) errors.push('Preuve de consentement incomplète');
+    if (!consentUrl) errors.push('URL du formulaire manquante');
+    if (!clientIp) errors.push('Adresse IP du consentement manquante');
 
     if (errors.length > 0) {
       return new Response(JSON.stringify({ success: false, errors }), {
-        status: 400, headers: CORS_HEADERS,
+        status: 400, headers: corsHeaders(context.request),
       });
     }
 
@@ -80,9 +98,6 @@ export async function onRequestPost(context) {
     const workDescription = `Projet: ${catName} en ${ville} (${cp}). Configuration: ${chauffageActuel || 'Non renseigné'}. Délai souhaité: ${
       delais === '1' ? 'Immédiat' : delais === '2' ? 'Moins de 3 mois' : 'Plus de 3 mois'
     }. Adresse chantier: ${adresse}, ${cp} ${ville}.`;
-
-    const clientIp = context.request.headers.get('CF-Connecting-IP') || '';
-    const userAgent = context.request.headers.get('User-Agent') || '';
 
     // ══════════════════════════════════════════════════════════════
     // ÉTAPE 1 : INSERT dans Supabase
@@ -109,8 +124,16 @@ export async function onRequestPost(context) {
         description: workDescription,
         ip_address: clientIp,
         user_agent: userAgent,
-        page_url: pageUrl || `https://${SITE_DOMAIN}`,
+        page_url: consentUrl,
         vud_status: 'pending',
+        vud_response: {
+          consent: {
+            date: consentTimestamp,
+            ip: clientIp,
+            text: CONSENT_TEXT,
+            url: consentUrl,
+          },
+        },
       };
 
       const sbRes = await fetch(`${SUPABASE_URL}/rest/v1/rank_rent_leads`, {
@@ -194,6 +217,10 @@ export async function onRequestPost(context) {
       midi: '1',
       soir: '1',
       we: '0',
+      consent_date: consentTimestamp,
+      consent_ip: clientIp,
+      consent_texte: CONSENT_TEXT,
+      consent_url: consentUrl,
     });
 
     const vudRes = await fetch(VUD_API_URL, {
@@ -215,7 +242,7 @@ export async function onRequestPost(context) {
       return new Response(JSON.stringify({
         success: false,
         errors: ['Réponse invalide de la plateforme partenaire. Veuillez réessayer.'],
-      }), { status: 502, headers: CORS_HEADERS });
+      }), { status: 502, headers: corsHeaders(context.request) });
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -236,7 +263,15 @@ export async function onRequestPost(context) {
           vud_devis_id: devisId ? `#${devisId}` : null,
           vud_devis_hash: devisHash || null,
           vud_status: code === '200' ? 'sent' : 'error',
-          vud_response: vudData,
+          vud_response: {
+            consent: {
+              date: consentTimestamp,
+              ip: clientIp,
+              text: CONSENT_TEXT,
+              url: consentUrl,
+            },
+            response: vudData,
+          },
           vud_cpl: Number(pingResult.cpl) || 0,
           updated_at: new Date().toISOString(),
         };
@@ -268,13 +303,13 @@ export async function onRequestPost(context) {
           recommande: pingResult.recommande,
           cpl: pingResult.cpl,
         },
-      }), { status: 200, headers: CORS_HEADERS });
+      }), { status: 200, headers: corsHeaders(context.request) });
     } else {
       const vudErrors = (vudData?.code_retour || []).map((e) => e.code_texte || `Erreur ${e.code}`);
       return new Response(JSON.stringify({
         success: false,
         errors: vudErrors.length > 0 ? vudErrors : ['Le partenaire a refusé la demande.'],
-      }), { status: 422, headers: CORS_HEADERS });
+      }), { status: 422, headers: corsHeaders(context.request) });
     }
 
   } catch (error) {
@@ -282,6 +317,6 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({
       success: false,
       errors: ['Une erreur serveur est survenue. Veuillez réessayer.'],
-    }), { status: 500, headers: CORS_HEADERS });
+    }), { status: 500, headers: corsHeaders(context.request) });
   }
 }

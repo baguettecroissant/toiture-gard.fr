@@ -201,6 +201,13 @@ const { initialZip = "", initialCommune = "" } = Astro.props;
         <input type="text" id="adresse" name="adresse" placeholder="15 Avenue de Nîmes" class="form-control" required minlength="5" />
       </div>
 
+      <div class="form-group consent-group">
+        <label class="consent-label" for="consent-phone">
+          <input type="checkbox" id="consent-phone" name="consent" value="true" required />
+          <span>J’accepte d’être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires afin de qualifier ma demande de devis. <a href="/politique-confidentialite">Voir les destinataires et la politique de confidentialité</a>.</span>
+        </label>
+      </div>
+
       <!-- Errors alert wrapper -->
       <div id="form-errors" class="alert-danger" style="display: none; margin-top: 15px;"></div>
 
@@ -275,6 +282,25 @@ const { initialZip = "", initialCommune = "" } = Astro.props;
     border-radius: var(--radius-sm);
     font-size: 13px;
     font-weight: 500;
+  }
+  .consent-group {
+    margin-top: 18px;
+  }
+  .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .consent-label input {
+    flex: 0 0 auto;
+    margin-top: 3px;
+  }
+  .consent-label a {
+    color: var(--accent-color, var(--accent));
+    text-decoration: underline;
   }
 </style>
 
@@ -405,6 +431,14 @@ const { initialZip = "", initialCommune = "" } = Astro.props;
     }
 
     const formData = new FormData(form as HTMLFormElement);
+    if (formData.get('consent') !== 'true') {
+      if (formErrors) {
+        formErrors.style.display = 'block';
+        formErrors.textContent = 'Veuillez accepter le consentement téléphonique pour continuer.';
+      }
+      return;
+    }
+    const consentTimestamp = new Date().toISOString();
     const catIdVal = Number(document.getElementById('cat_id')?.getAttribute('value') || (document.getElementById('cat_id') as HTMLInputElement)?.value || 143);
     
     const typeBienLabel = (document.getElementById('type_bien') as HTMLInputElement)?.value === '1' ? 'Maison' : 'Appartement';
@@ -427,7 +461,9 @@ const { initialZip = "", initialCommune = "" } = Astro.props;
       situation: (document.getElementById('situation') as HTMLInputElement)?.value || '1',
       chauffageActuel: `Toiture: ${materialLabel}, Surface: ${qtyText}, Statut: ${statusLabel}`,
       delais: (document.getElementById('delais') as HTMLInputElement)?.value || '2',
-      pageUrl: window.location.href
+      pageUrl: window.location.href,
+      consent: true,
+      consent_timestamp: consentTimestamp
     };
 
     const step5 = document.getElementById('step-5') as HTMLElement;
