@@ -18,8 +18,7 @@ const VUD_API_URL = 'https://www.viteundevis.com/api/get.php';
 const VUD_PING_URL = 'https://www.viteundevis.com/api/ping.php';
 
 // ── Supabase ──
-const SUPABASE_URL = 'https://nhmvgsrwhjsjnpncpiaj.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5obXZnc3J3aGpzam5wbmNwaWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5OTY0NjQsImV4cCI6MjA4MzU3MjQ2NH0.qpG5CJDNa53BB7ZpDy414GL3hmb51omxqPrnrrd7O6I';
+
 
 // ── Category name mapping for Toiture ──
 const CAT_NAMES = {
@@ -56,6 +55,28 @@ export async function onRequestOptions(context) {
 /**
  * Handle POST — Main lead submission handler
  */
+export async function onRequestGet(context) {
+  const env = context.env || {};
+  const supabaseConfigured = Boolean(
+    String(env.SUPABASE_URL || '').trim() &&
+    String(env.SUPABASE_PUBLISHABLE_KEY || env.SUPABASE_ANON_KEY || '').trim()
+  );
+
+  return new Response(JSON.stringify({
+    ok: supabaseConfigured,
+    service: 'rank-rent-lead',
+    version: 'dual-write-v2',
+    supabase_configured: supabaseConfigured
+  }), {
+    status: supabaseConfigured ? 200 : 503,
+    headers: {
+      ...corsHeaders(context.request),
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store'
+    }
+  });
+}
+
 export async function onRequestPost(context) {
   try {
     const rawBody = await context.request.json();
@@ -88,6 +109,18 @@ export async function onRequestPost(context) {
     if (errors.length > 0) {
       return new Response(JSON.stringify({ success: false, errors }), {
         status: 400, headers: corsHeaders(context.request),
+      });
+    }
+
+    const supabaseUrl = String(context.env?.SUPABASE_URL || '').trim().replace(/\/+$/, '');
+    const supabaseKey = String(
+      context.env?.SUPABASE_PUBLISHABLE_KEY || context.env?.SUPABASE_ANON_KEY || ''
+    ).trim();
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('[Supabase] Runtime configuration missing');
+      return new Response(JSON.stringify({ success: false, error: 'storage_unavailable' }), {
+        status: 503, headers: corsHeaders(context.request),
       });
     }
 
@@ -136,29 +169,39 @@ export async function onRequestPost(context) {
         },
       };
 
-      const sbRes = await fetch(`${SUPABASE_URL}/rest/v1/rank_rent_leads`, {
+      const sbRes = await fetch(`${supabaseUrl}/rest/v1/rank_rent_leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
           'Prefer': 'return=representation',
         },
         body: JSON.stringify(supabasePayload),
       });
 
-      if (sbRes.ok) {
-        const sbData = await sbRes.json();
-        supabaseId = sbData?.[0]?.id || null;
-        console.log(`[Supabase] Lead saved: ${supabaseId}`);
-      } else {
-        const errText = await sbRes.text();
-        console.error('[Supabase] Insert error:', errText);
+      if (!sbRes.ok) {
+        console.error(`[Supabase] Insert failed with status ${sbRes.status}`);
+        return new Response(JSON.stringify({ success: false, error: 'storage_unavailable' }), {
+          status: 503, headers: corsHeaders(context.request),
+        });
       }
+
+      const sbData = await sbRes.json();
+      supabaseId = sbData?.[0]?.id || null;
+      if (!supabaseId) {
+        console.error('[Supabase] Insert returned no row id');
+        return new Response(JSON.stringify({ success: false, error: 'storage_unavailable' }), {
+          status: 503, headers: corsHeaders(context.request),
+        });
+      }
+      console.log(`[Supabase] Lead saved: ${supabaseId}`);
     } catch (sbErr) {
       console.error('[Supabase] Insert exception:', sbErr);
+      return new Response(JSON.stringify({ success: false, error: 'storage_unavailable' }), {
+        status: 503, headers: corsHeaders(context.request),
+      });
     }
-
     // ══════════════════════════════════════════════════════════════
     // ÉTAPE 2 : PING ViteUnDevis
     // ══════════════════════════════════════════════════════════════
@@ -276,12 +319,12 @@ export async function onRequestPost(context) {
           updated_at: new Date().toISOString(),
         };
 
-        await fetch(`${SUPABASE_URL}/rest/v1/rank_rent_leads?id=eq.${supabaseId}`, {
+        await fetch(`${supabaseUrl}/rest/v1/rank_rent_leads?id=eq.${supabaseId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
           },
           body: JSON.stringify(updatePayload),
         });
